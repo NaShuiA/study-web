@@ -1,10 +1,12 @@
 var express = require('express');
 var md5 = require('blueimp-md5');
-var router = express.Router();
 var User = require('./models/user.js')
+var router = express.Router();
+
 
 //加载首页
 router.get('/',function(req,res) {
+  console.log(req.session.user);
   res.render('index.html')
 })
 //渲染登录页面
@@ -54,6 +56,9 @@ router.post('/register',(req,res)=>{
           message: '服务端错误'
         })
       }
+      //注册成功使用session保存数据
+      // 用户存在，登陆成功，通过 Session 记录登陆状态
+      req.session.user = true;
       res.status(200).json({
         err_code:0,
         message:'ok'
