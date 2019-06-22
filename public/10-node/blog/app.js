@@ -23,14 +23,19 @@ app.set('views', path.join(__dirname, './views/')) // 默认就是 ./views 目�
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json());
+app.set(' trust proxy ',1 );
+
 app.use(session({
   secret: 'keyboard cat',//加密字符串 会在原有的字符上和这个字符串拼接起来
   resave: false,
   saveUninitialized: true,//无论是否使用session 都分配一个
-  cookie: { secure: true }
+  cookie: { maxAge: 60 * 1000 }
+
 }))
 //挂在到app
 app.use(router);
+
+
 app.listen(3000,function() {
   console.log('running......')
 })
